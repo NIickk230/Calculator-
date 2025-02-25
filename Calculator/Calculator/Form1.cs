@@ -29,8 +29,159 @@ namespace Calculator
         private void Btn1_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            currentInput += Btn1.Text;
-            textBox.Text = currentInput;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn2_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn3_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn4_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn5_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn6_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn7_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn8_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn9_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += btn.Text;
+        }
+
+        private void Btn0_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            currentInput += btn.Text;
+            textBox.Text += currentInput;
+        }
+
+        private void PlusBtn_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            operation = btn.Text;
+            textBox.Text += operation;
+            operationPeding = true;
+            result += Calculate();
+        }
+
+        private void MinusBtn_Click(object sender, EventArgs e)
+        {
+            if (operationPeding)
+            {
+                result = Calculate();
+            }
+            Button btn = (Button)sender;
+            operation = btn.Text;
+            textBox.Text += operation;
+            operationPeding = true;
+        }
+
+        private void MultBtn_Click(object sender, EventArgs e)
+        {
+            if (operationPeding)
+            {
+                result = Calculate();
+            }
+            Button btn = (Button)sender;
+            operation = btn.Text;
+            textBox.Text += operation;
+            operationPeding = true;
+        }
+
+        private void DivBtn_Click(object sender, EventArgs e)
+        {
+            if (operationPeding)
+            {
+                result = Calculate();
+            }
+            Button btn = (Button)sender;
+            operation = btn.Text;
+            textBox.Text += operation;
+            operationPeding = true;
+        }
+
+        private void EqBtn_Click(object sender, EventArgs e)
+        {
+            result += Calculate();
+            currentInput = "";
+            textBox.Text = result.ToString();
+        }
+
+        private double Calculate()
+        {
+            double result2 = 0;
+            if (operationPeding)
+            {
+                
+                double input = double.Parse(currentInput);
+
+                switch (operation)
+                {
+                    case "+":
+                        result2 += input;
+                        break;
+                    case "-":
+                        result2 -= input; 
+                        break;
+                    case "*":
+                        result2 *= input; 
+                        break;
+                    case "/":
+                        if(input == 0)
+                        {
+                            textBox.Text = "error";
+                        }
+                        else
+                        {
+                            result2 /= input;
+                        }
+                        break;
+                }
+                operationPeding = false;
+                currentInput = "";
+            }
+            return result2;
         }
     }
 }
