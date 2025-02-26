@@ -221,6 +221,7 @@
             this.CleareBtn.TabIndex = 16;
             this.CleareBtn.Text = "Cleare";
             this.CleareBtn.UseVisualStyleBackColor = true;
+            this.CleareBtn.Click += new System.EventHandler(this.CleareBtn_Click);
             // 
             // Form1
             // 

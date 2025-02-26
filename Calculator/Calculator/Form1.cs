@@ -15,7 +15,6 @@ namespace Calculator
         string currentInput = "";
         double result = 0;
         string operation = "";
-        bool operationPeding = false;
         public Form1()
         {
             InitializeComponent();
@@ -93,7 +92,7 @@ namespace Calculator
         {
             Button btn = (Button)sender;
             currentInput += btn.Text;
-            textBox.Text += currentInput;
+            textBox.Text += btn.Text;
         }
 
         private void PlusBtn_Click(object sender, EventArgs e)
@@ -101,57 +100,70 @@ namespace Calculator
             Button btn = (Button)sender;
             operation = btn.Text;
             textBox.Text += operation;
-            operationPeding = true;
-            result += Calculate();
+            Calculate();
         }
 
         private void MinusBtn_Click(object sender, EventArgs e)
         {
-            if (operationPeding)
+            if (!string.IsNullOrEmpty(operation))
             {
-                result = Calculate();
+
+                Calculate();
+            }
+            else
+            {
+                operation = "+";
+                Calculate();
             }
             Button btn = (Button)sender;
             operation = btn.Text;
             textBox.Text += operation;
-            operationPeding = true;
         }
 
         private void MultBtn_Click(object sender, EventArgs e)
         {
-            if (operationPeding)
+            if (!string.IsNullOrEmpty(operation))
             {
-                result = Calculate();
+
+                Calculate();
+            }
+            else
+            {
+                operation = "+";
+                Calculate();
             }
             Button btn = (Button)sender;
             operation = btn.Text;
             textBox.Text += operation;
-            operationPeding = true;
         }
 
         private void DivBtn_Click(object sender, EventArgs e)
         {
-            if (operationPeding)
+            if (!string.IsNullOrEmpty(operation))
             {
-                result = Calculate();
+
+                Calculate();
+            }
+            else
+            {
+                operation = "+";
+                Calculate();
             }
             Button btn = (Button)sender;
             operation = btn.Text;
             textBox.Text += operation;
-            operationPeding = true;
         }
 
         private void EqBtn_Click(object sender, EventArgs e)
         {
-            result += Calculate();
+            Calculate();
             currentInput = "";
             textBox.Text = result.ToString();
         }
 
-        private double Calculate()
+        private void Calculate()
         {
-            double result2 = 0;
-            if (operationPeding)
+            if (!String.IsNullOrEmpty(currentInput))
             {
                 
                 double input = double.Parse(currentInput);
@@ -159,13 +171,13 @@ namespace Calculator
                 switch (operation)
                 {
                     case "+":
-                        result2 += input;
+                        result += input;
                         break;
                     case "-":
-                        result2 -= input; 
+                        result -= input; 
                         break;
                     case "*":
-                        result2 *= input; 
+                        result *= input; 
                         break;
                     case "/":
                         if(input == 0)
@@ -174,14 +186,26 @@ namespace Calculator
                         }
                         else
                         {
-                            result2 /= input;
+                            result /= input;
                         }
                         break;
                 }
-                operationPeding = false;
                 currentInput = "";
+                operation = "";
             }
-            return result2;
+            else
+            {
+                textBox.Text = "error";
+            }
+
+        }
+
+        private void CleareBtn_Click(object sender, EventArgs e)
+        {
+            currentInput = "";
+            result = 0;
+            operation = "";
+            textBox.Text = "";
         }
     }
 }
