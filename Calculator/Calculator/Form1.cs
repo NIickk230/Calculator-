@@ -11,6 +11,10 @@ using System.Windows.Forms;
 
 namespace Calculator
 {
+
+    //reccorect this currentInput = "0"; it should become just empthy string not 0 <3
+
+
     public partial class Form1 : Form
     {
         string currentInput = "";
@@ -177,8 +181,16 @@ namespace Calculator
                 textBox2.Text += textBox.Text;
             }
 
-            string formattedResult = result.ToString("F3");
-            textBox.Text = result.ToString();
+            if(result % 1 != 0)
+            {
+                string formattedResult = result.ToString("F3");
+                textBox.Text = formattedResult;
+            }
+            else
+            {
+                textBox.Text = result.ToString();
+            }
+            
         }
 
         private void Calculate()
@@ -192,12 +204,15 @@ namespace Calculator
                 {
                     case "+":
                         result += input;
+                        currentInput = "0";
                         break;
                     case "-":
-                        result -= input; 
+                        result -= input;
+                        currentInput = "0";
                         break;
-                    case "*":
-                        result *= input; 
+                    case "X":
+                        result *= input;
+                        currentInput = "0";
                         break;
                     case "/":
                         if(input == 0)
@@ -206,17 +221,15 @@ namespace Calculator
                         }
                         else
                         {
+                            currentInput = "0";
                             result /= input;
                         }
                         break;
-                    case "^2":
-                        result = result*result;
-                        break;
-                    case "√2": 
-                        result = Math.Sqrt(result);
+                    default:
+                        result = input;
                         break;
                 }
-                currentInput = "0";
+               
             }
             else
             {
@@ -247,41 +260,26 @@ namespace Calculator
         private void BackBtn_Click(object sender, EventArgs e)
         {
             textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
-            currentInput = currentInput.Substring(0, currentInput.Length - 1);
+            if(!textBox.Text.EndsWith("^2") || !textBox.Text.EndsWith("√2"))
+            {
+                currentInput = currentInput.Substring(0, currentInput.Length - 1);
+            }
         }
 
         private void RootBtn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(operation))
-            {
-
-                Calculate();
-            }
-            else
-            {
-                operation = "+";
-                Calculate();
-            }
             Button btn = (Button)sender;
-            operation = btn.Text;
-            textBox.Text += operation;
+            textBox.Text += btn.Text;
+            double input = Math.Sqrt(double.Parse(currentInput));
+            currentInput = input.ToString();
         }
 
         private void SquareBtn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(operation))
-            {
-
-                Calculate();
-            }
-            else
-            {
-                operation = "+";
-                Calculate();
-            }
             Button btn = (Button)sender;
-            operation = btn.Text;
-            textBox.Text += operation;
+            textBox.Text += btn.Text;
+            double input =double.Parse(currentInput);
+            currentInput = (input*input).ToString();
         }
     }
 }
