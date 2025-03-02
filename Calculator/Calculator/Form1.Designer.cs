@@ -66,6 +66,8 @@
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(398, 60);
             this.textBox.TabIndex = 0;
+            this.textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox.Click += new System.EventHandler(this.commonButtonForOperations);
             // 
             // contextMenuStrip1
             // 
@@ -86,7 +88,7 @@
             this.Btn2.TabIndex = 2;
             this.Btn2.Text = "2";
             this.Btn2.UseVisualStyleBackColor = false;
-            this.Btn2.Click += new System.EventHandler(this.Btn2_Click);
+            this.Btn2.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // Btn3
             // 
@@ -101,7 +103,7 @@
             this.Btn3.TabIndex = 3;
             this.Btn3.Text = "3";
             this.Btn3.UseVisualStyleBackColor = false;
-            this.Btn3.Click += new System.EventHandler(this.Btn3_Click);
+            this.Btn3.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // Btn1
             // 
@@ -116,7 +118,7 @@
             this.Btn1.TabIndex = 3;
             this.Btn1.Text = "1";
             this.Btn1.UseVisualStyleBackColor = false;
-            this.Btn1.Click += new System.EventHandler(this.Btn1_Click);
+            this.Btn1.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // Btn4
             // 
@@ -131,7 +133,7 @@
             this.Btn4.TabIndex = 4;
             this.Btn4.Text = "4";
             this.Btn4.UseVisualStyleBackColor = false;
-            this.Btn4.Click += new System.EventHandler(this.Btn4_Click);
+            this.Btn4.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // Btn5
             // 
@@ -146,7 +148,7 @@
             this.Btn5.TabIndex = 5;
             this.Btn5.Text = "5";
             this.Btn5.UseVisualStyleBackColor = false;
-            this.Btn5.Click += new System.EventHandler(this.Btn5_Click);
+            this.Btn5.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // MinusBtn
             // 
@@ -161,7 +163,7 @@
             this.MinusBtn.TabIndex = 6;
             this.MinusBtn.Text = "-";
             this.MinusBtn.UseVisualStyleBackColor = false;
-            this.MinusBtn.Click += new System.EventHandler(this.MinusBtn_Click);
+            this.MinusBtn.Click += new System.EventHandler(this.commonButtonForOperations);
             // 
             // PlusBtn
             // 
@@ -176,7 +178,7 @@
             this.PlusBtn.TabIndex = 7;
             this.PlusBtn.Text = "+";
             this.PlusBtn.UseVisualStyleBackColor = false;
-            this.PlusBtn.Click += new System.EventHandler(this.PlusBtn_Click);
+            this.PlusBtn.Click += new System.EventHandler(this.commonButtonForOperations);
             // 
             // Btn7
             // 
@@ -191,7 +193,7 @@
             this.Btn7.TabIndex = 8;
             this.Btn7.Text = "7";
             this.Btn7.UseVisualStyleBackColor = false;
-            this.Btn7.Click += new System.EventHandler(this.Btn7_Click);
+            this.Btn7.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // Btn9
             // 
@@ -206,7 +208,7 @@
             this.Btn9.TabIndex = 9;
             this.Btn9.Text = "9";
             this.Btn9.UseVisualStyleBackColor = false;
-            this.Btn9.Click += new System.EventHandler(this.Btn9_Click);
+            this.Btn9.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // Btn8
             // 
@@ -221,7 +223,7 @@
             this.Btn8.TabIndex = 10;
             this.Btn8.Text = "8";
             this.Btn8.UseVisualStyleBackColor = false;
-            this.Btn8.Click += new System.EventHandler(this.Btn8_Click);
+            this.Btn8.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // Btn0
             // 
@@ -236,7 +238,7 @@
             this.Btn0.TabIndex = 11;
             this.Btn0.Text = "0";
             this.Btn0.UseVisualStyleBackColor = false;
-            this.Btn0.Click += new System.EventHandler(this.Btn0_Click);
+            this.Btn0.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // Btn6
             // 
@@ -251,7 +253,7 @@
             this.Btn6.TabIndex = 12;
             this.Btn6.Text = "6";
             this.Btn6.UseVisualStyleBackColor = false;
-            this.Btn6.Click += new System.EventHandler(this.Btn6_Click);
+            this.Btn6.Click += new System.EventHandler(this.commonButtonsforNumbers);
             // 
             // EqBtn
             // 
@@ -281,7 +283,7 @@
             this.DivBtn.TabIndex = 14;
             this.DivBtn.Text = "/";
             this.DivBtn.UseVisualStyleBackColor = false;
-            this.DivBtn.Click += new System.EventHandler(this.DivBtn_Click);
+            this.DivBtn.Click += new System.EventHandler(this.commonButtonForOperations);
             // 
             // MultBtn
             // 
@@ -296,7 +298,7 @@
             this.MultBtn.TabIndex = 15;
             this.MultBtn.Text = "X";
             this.MultBtn.UseVisualStyleBackColor = false;
-            this.MultBtn.Click += new System.EventHandler(this.MultBtn_Click);
+            this.MultBtn.Click += new System.EventHandler(this.commonButtonForOperations);
             // 
             // CleareBtn
             // 
@@ -324,7 +326,6 @@
             this.textBox2.Size = new System.Drawing.Size(403, 36);
             this.textBox2.TabIndex = 17;
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBox2.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // DotBtn
             // 
@@ -398,7 +399,6 @@
             this.button5.TabIndex = 22;
             this.button5.Text = "X";
             this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -447,6 +447,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Click += new System.EventHandler(this.commonButtonsforNumbers);
             this.ResumeLayout(false);
             this.PerformLayout();
 
