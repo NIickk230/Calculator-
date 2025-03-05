@@ -21,7 +21,6 @@ namespace Calculator
         string currentInput = "";
         double result = 0;
         string operation = "";
-        bool firsOperation = false;
         public Form1()
         {
             InitializeComponent();
@@ -67,11 +66,7 @@ namespace Calculator
 
         private void SquareBtn_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            textBox.Text += btn.Text;
-            double input = double.Parse(currentInput);
-            string formattedResult = (input * input).ToString("F3");
-            currentInput = formattedResult;
+
         }
 
         private void EqBtn_Click(object sender, EventArgs e)
@@ -178,6 +173,66 @@ namespace Calculator
                     result = input;
                     break;
             }
+
+        }
+
+        private void numberButtons(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+
+            textBox.Text += button.Text;
+            
+        }
+        HashSet<char> operationChars = new HashSet<char> { '+', '-', '*', '/', '^', '√' };
+        private void operationsButton(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            
+            char lastChar = textBox.Text[textBox.TextLength - 1];
+
+            if(!string.IsNullOrEmpty(textBox.Text) && !operationChars.Contains(lastChar)){
+                textBox.Text += button.Text;
+            }
+        }
+
+        private void Calculate1()
+        {
+            Stack<char> outPut = new Stack<char>();
+            Stack<char> operations = new Stack<char>();
+            bool containsPriorityOperation = false;
+            HashSet<char> PriorityOperation = new HashSet<char> { '*', '/', '^', '√' };
+
+            foreach (char Ch in textBox.Text)
+            {
+                if (char.IsDigit(Ch) || Ch == '.')
+                {
+                     outPut.Push(Ch);
+                }
+                else
+                {
+                    if (!containsPriorityOperation)
+                    {
+                        operations.Push(Ch);
+                        if (PriorityOperation.Contains(Ch))
+                        {
+                            containsPriorityOperation = true;
+                        }
+                    }
+                    else
+                    {
+                        while(operation.Count() > 0)
+                        {
+                            char tempOp;
+
+                            tempOp = operations.Peek();
+                            operations.Pop();
+
+                            outPut.Push(tempOp);
+                        }
+                    }
+                } 
+            }
+
 
         }
     }
