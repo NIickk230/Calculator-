@@ -11,6 +11,10 @@ using System.Windows.Forms;
 
 namespace Calculator
 {
+    //thiiiiiisssss thing sucks go down see new code its betteeeeer
+
+
+
     //make multiplication and dividing functins code more like ro root and square function for to make dividion and multiplication functions that happenes before others
     // make operation char instead of string
     //fuck change whole code its enough with playing
@@ -169,6 +173,7 @@ namespace Calculator
                         result /= input;
                     }
                     break;
+                
                 default:
                     result = input;
                     break;
@@ -195,21 +200,28 @@ namespace Calculator
             }
         }
 
+
+        //new code i know i should add much more things <3
+
         private void Calculate1()
         {
-            Stack<char> outPut = new Stack<char>();
+            Stack<string> outPut = new Stack<string>();
+            List<string> RPN = new List<string>();
             Stack<char> operations = new Stack<char>();
             bool containsPriorityOperation = false;
             HashSet<char> PriorityOperation = new HashSet<char> { '*', '/', '^', '√' };
+            string wholeNumber = string.Empty;
 
             foreach (char Ch in textBox.Text)
             {
                 if (char.IsDigit(Ch) || Ch == '.')
                 {
-                     outPut.Push(Ch);
+                    
+                    wholeNumber += Ch;
                 }
                 else
                 {
+                    RPN.Add(wholeNumber);
                     if (!containsPriorityOperation)
                     {
                         operations.Push(Ch);
@@ -220,20 +232,89 @@ namespace Calculator
                     }
                     else
                     {
-                        while(operation.Count() > 0)
+                        if (PriorityOperation.Contains(Ch))
+                        {
+                            while (operation.Count() > 0)
+                            {
+                                char tempOp;
+
+                                tempOp = operations.Peek();
+                                operations.Pop();
+
+                                RPN.Add(tempOp.ToString());
+                            }
+                        }
+                        else
                         {
                             char tempOp;
 
                             tempOp = operations.Peek();
                             operations.Pop();
 
-                            outPut.Push(tempOp);
+                            RPN.Add(tempOp.ToString());
                         }
                     }
                 } 
             }
 
+            foreach (string X in RPN)
+            {
+                
+                if (!operation.Contains(X))
+                {
+                    outPut.Push(X);
+                }
+                else
+                {
+                    if(outPut.Count() > 1)
+                    {
+                        double tempNum1;
+                        double tempNum2;
 
+                        tempNum1 = double.Parse(outPut.Peek());
+                        outPut.Pop();
+
+                        tempNum2 = double.Parse(outPut.Peek());
+                        outPut.Pop();
+
+                        switch (X)
+                        {
+                            case "+":
+                                tempNum2 += tempNum1;
+                                break;
+                            case "-":
+                                tempNum2 -= tempNum1;
+                                break;
+                            case "X":
+                                tempNum2 *= tempNum1;
+                                break;
+                            case "/":
+                                if (tempNum1 == 0)
+                                {
+                                    textBox.Text = "error";
+                                }
+                                else
+                                {
+                                    tempNum2 /= tempNum1;
+                                }
+                                break;
+                            case "^":
+                                tempNum2 = Math.Pow(tempNum2, tempNum1);
+                                break;
+                            case "":
+                                tempNum2 = Math.Pow(tempNum1, 1.0 / tempNum2);
+                                break;
+                        }
+
+                        outPut.Push(tempNum2.ToString());
+                    }
+                    else
+                    {
+                        textBox.Text = outPut.Peek();
+                        outPut.Pop();
+                    }
+                }
+            }
         }
     }
 }
