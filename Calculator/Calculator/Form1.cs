@@ -22,7 +22,6 @@ namespace Calculator
 
     public partial class Form1 : Form
     {
-        string currentInput = "";
         double result = 0;
         string operation = "";
         public Form1()
@@ -30,11 +29,8 @@ namespace Calculator
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
 
-        }
-
+        /*
         private void commonButtonsforNumbers(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -73,39 +69,7 @@ namespace Calculator
 
         }
 
-        private void EqBtn_Click(object sender, EventArgs e)
-        {
-            Calculate();
-            if (string.IsNullOrEmpty(textBox2.Text))
-            {
-                textBox2.Text = textBox.Text;
-            }
-            else
-            {
-                textBox2.Text = "";
-                textBox2.Text = textBox.Text;
-            }
-
-            if(result % 1 != 0)
-            {
-                string formattedResult = result.ToString("F3");
-                textBox.Text = formattedResult;
-            }
-            else
-            {
-                textBox.Text = result.ToString();
-            }
-            
-        }
-        private void CleareBtn_Click(object sender, EventArgs e)
-        {
-            currentInput = "";
-            result = 0;
-            operation = "";
-            textBox.Text = "";
-            textBox2.Text = "";
-        }
-
+        
         private void BackBtn_Click(object sender, EventArgs e)
         {
             ///this thing sucks i know im trying to change it
@@ -181,47 +145,110 @@ namespace Calculator
 
         }
 
+        private void CleareBtn_Click(object sender, EventArgs e)
+        {
+            result = 0;
+            operation = "";
+            textBox.Text = "";
+            textBox2.Text = "";
+            currentinput = "";
+        }
+        */
+
+        char lastChar = ' ';
         private void numberButtons(object sender, EventArgs e)
         {
             Button button = (Button)sender;
 
-            textBox.Text += button.Text;
-            
+
+            if (button.Text == "." && string.IsNullOrEmpty(textBox.Text) && lastChar == '.')
+            {
+                textBox.Text = "error";
+            }
+            else
+            {
+                textBox.Text += button.Text;
+                lastChar = textBox.Text[textBox.TextLength - 1];
+            }
+
         }
-        HashSet<char> operationChars = new HashSet<char> { '+', '-', '*', '/', '^', '√' };
+        HashSet<char> operationChars = new HashSet<char> { '+', '-', 'X', '/', '^', '√' };
         private void operationsButton(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            
-            char lastChar = textBox.Text[textBox.TextLength - 1];
 
-            if(!string.IsNullOrEmpty(textBox.Text) && !operationChars.Contains(lastChar)){
+
+            if (!string.IsNullOrEmpty(textBox.Text) && !operationChars.Contains(lastChar))
+            {
                 textBox.Text += button.Text;
+            }
+            else
+            {
+                textBox.Text = "error";
             }
         }
 
+        //check if last char is number
+        private void EqBtn_Click(object sender, EventArgs e)
+        {
+            Calculate();
+            if (string.IsNullOrEmpty(textBox2.Text))
+            {
+                textBox2.Text = textBox.Text;
+            }
+            else
+            {
+                textBox2.Text = "";
+                textBox2.Text = textBox.Text;
+            }
+
+            result = double.Parse(outPut.Peek());
+            outPut.Pop();
+
+            if (result % 1 != 0)
+            {
+                string formattedResult = result.ToString("F3");
+                textBox.Text = formattedResult;
+            }
+            else
+            {
+                textBox.Text = result.ToString();
+            }
+
+        }
+        private void CleareBtn_Click(object sender, EventArgs e)
+        {
+            result = 0;
+            textBox.Text = "";
+            textBox2.Text = "";
+            outPut.Clear();
+            RPN.Clear();
+            operations.Clear();
+            containsPriorityOperation = false;
+        }
 
         //new code i know i should add much more things <3
 
-        private void Calculate1()
+        Stack<string> outPut = new Stack<string>();
+        List<string> RPN = new List<string>();
+        Stack<char> operations = new Stack<char>();
+        bool containsPriorityOperation = false;
+        bool containsNormalOperation = false;
+        private void Calculate()
         {
-            Stack<string> outPut = new Stack<string>();
-            List<string> RPN = new List<string>();
-            Stack<char> operations = new Stack<char>();
-            bool containsPriorityOperation = false;
-            HashSet<char> PriorityOperation = new HashSet<char> { '*', '/', '^', '√' };
+            HashSet<char> PriorityOperation = new HashSet<char> { 'X', '/', '^', '√' };
             string wholeNumber = string.Empty;
 
             foreach (char Ch in textBox.Text)
             {
                 if (char.IsDigit(Ch) || Ch == '.')
                 {
-                    
                     wholeNumber += Ch;
                 }
                 else
                 {
                     RPN.Add(wholeNumber);
+                    wholeNumber = "";
                     if (!containsPriorityOperation)
                     {
                         operations.Push(Ch);
@@ -229,12 +256,16 @@ namespace Calculator
                         {
                             containsPriorityOperation = true;
                         }
+                        else
+                        {
+
+                        }
                     }
                     else
                     {
                         if (PriorityOperation.Contains(Ch))
                         {
-                            while (operation.Count() > 0)
+                            while (operations.Count() > 0)
                             {
                                 char tempOp;
 
@@ -251,16 +282,26 @@ namespace Calculator
                             tempOp = operations.Peek();
                             operations.Pop();
 
+                            operations.Push(Ch);
+
                             RPN.Add(tempOp.ToString());
                         }
                     }
-                } 
+                }
+
+            }
+
+            RPN.Add(wholeNumber);
+
+            foreach (char OP in operations)
+            {
+                RPN.Add(OP.ToString());
             }
 
             foreach (string X in RPN)
             {
                 
-                if (!operation.Contains(X))
+                if (!operationChars.Contains(char.Parse(X)))
                 {
                     outPut.Push(X);
                 }
@@ -301,17 +342,12 @@ namespace Calculator
                             case "^":
                                 tempNum2 = Math.Pow(tempNum2, tempNum1);
                                 break;
-                            case "":
+                            case "√":
                                 tempNum2 = Math.Pow(tempNum1, 1.0 / tempNum2);
                                 break;
                         }
 
                         outPut.Push(tempNum2.ToString());
-                    }
-                    else
-                    {
-                        textBox.Text = outPut.Peek();
-                        outPut.Pop();
                     }
                 }
             }

@@ -67,7 +67,6 @@
             this.textBox.Size = new System.Drawing.Size(398, 60);
             this.textBox.TabIndex = 0;
             this.textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBox.Click += new System.EventHandler(this.commonButtonForOperations);
             // 
             // contextMenuStrip1
             // 
@@ -340,19 +339,20 @@
             this.DotBtn.TabIndex = 18;
             this.DotBtn.Text = ".";
             this.DotBtn.UseVisualStyleBackColor = false;
+            this.DotBtn.Click += new System.EventHandler(this.numberButtons);
             // 
             // SquareBtn
             // 
             this.SquareBtn.BackColor = System.Drawing.Color.Gray;
             this.SquareBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.SquareBtn.FlatAppearance.BorderSize = 0;
-            this.SquareBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SquareBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SquareBtn.ForeColor = System.Drawing.Color.White;
             this.SquareBtn.Location = new System.Drawing.Point(105, 178);
             this.SquareBtn.Name = "SquareBtn";
             this.SquareBtn.Size = new System.Drawing.Size(98, 70);
             this.SquareBtn.TabIndex = 19;
-            this.SquareBtn.Text = "^2";
+            this.SquareBtn.Text = "^";
             this.SquareBtn.UseVisualStyleBackColor = false;
             this.SquareBtn.Click += new System.EventHandler(this.operationsButton);
             // 
@@ -367,7 +367,7 @@
             this.RootBtn.Name = "RootBtn";
             this.RootBtn.Size = new System.Drawing.Size(98, 70);
             this.RootBtn.TabIndex = 20;
-            this.RootBtn.Text = "√2";
+            this.RootBtn.Text = "√";
             this.RootBtn.UseVisualStyleBackColor = false;
             this.RootBtn.Click += new System.EventHandler(this.operationsButton);
             // 
@@ -384,7 +384,6 @@
             this.BackBtn.TabIndex = 21;
             this.BackBtn.Text = "<<";
             this.BackBtn.UseVisualStyleBackColor = false;
-            this.BackBtn.Click += new System.EventHandler(this.BackBtn_Click);
             // 
             // button5
             // 
@@ -446,8 +445,6 @@
             this.Controls.Add(this.textBox);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Click += new System.EventHandler(this.commonButtonsforNumbers);
             this.ResumeLayout(false);
             this.PerformLayout();
 
