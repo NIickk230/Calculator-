@@ -13,13 +13,6 @@ namespace Calculator
 {
     //thiiiiiisssss thing sucks go down see new code its betteeeeer
 
-
-
-    //make multiplication and dividing functins code more like ro root and square function for to make dividion and multiplication functions that happenes before others
-    // make operation char instead of string
-    //fuck change whole code its enough with playing
-    //change currentinput some the way that it cant have more than 3 digits after . becuase if its have at the end we name it f3 format so in text it wont not have but in the current input yea it will have and when u try to delete u delete whole text in text box but will still left umbers in currentinput or result end u should make it like this after every operation because its not enough to do eat the end because before that it will add u pto eachother and give us differante answer from expected one and many aother condition so u should make sure it wont not go  more far trhen 3 numbers after . and somehow realy easly dso u have not to write all shity code 100 times in ur shity code
-
     public partial class Form1 : Form
     {
         double result = 0;
@@ -155,6 +148,18 @@ namespace Calculator
         }
         */
 
+
+
+
+
+
+
+
+
+        //almost work correctly check 6+4×3−8÷2+√25+2^3−(3)√27
+​
+
+
         char lastChar = ' ';
         private void numberButtons(object sender, EventArgs e)
         {
@@ -249,7 +254,26 @@ namespace Calculator
                 {
                     RPN.Add(wholeNumber);
                     wholeNumber = "";
-                    if (!containsPriorityOperation)
+                    if (containsPriorityOperation || containsNormalOperation && !PriorityOperation.Contains(Ch))
+                    {
+                        if (!PriorityOperation.Contains(Ch))
+                        {
+                            containsPriorityOperation = false;
+                        }
+                        char tempOp;
+
+                        tempOp = operations.Peek();
+                        operations.Pop();
+
+                        operations.Push(Ch);
+
+                        containsNormalOperation = true;
+
+                        RPN.Add(tempOp.ToString());
+
+                        operations.Push(Ch);
+                    }
+                    else
                     {
                         operations.Push(Ch);
                         if (PriorityOperation.Contains(Ch))
@@ -258,33 +282,7 @@ namespace Calculator
                         }
                         else
                         {
-
-                        }
-                    }
-                    else
-                    {
-                        if (PriorityOperation.Contains(Ch))
-                        {
-                            while (operations.Count() > 0)
-                            {
-                                char tempOp;
-
-                                tempOp = operations.Peek();
-                                operations.Pop();
-
-                                RPN.Add(tempOp.ToString());
-                            }
-                        }
-                        else
-                        {
-                            char tempOp;
-
-                            tempOp = operations.Peek();
-                            operations.Pop();
-
-                            operations.Push(Ch);
-
-                            RPN.Add(tempOp.ToString());
+                            containsNormalOperation = true;
                         }
                     }
                 }
@@ -297,13 +295,16 @@ namespace Calculator
             {
                 RPN.Add(OP.ToString());
             }
+            operations.Clear();
+            containsNormalOperation = false;
+
 
             foreach (string X in RPN)
             {
                 
-                if (!operationChars.Contains(char.Parse(X)))
+                if (double.TryParse(X, out _))
                 {
-                    outPut.Push(X);
+                    outPut.Push(X.ToString());
                 }
                 else
                 {
@@ -351,6 +352,8 @@ namespace Calculator
                     }
                 }
             }
+            RPN.Clear();
+            
         }
     }
 }
