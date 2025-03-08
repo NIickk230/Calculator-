@@ -11,216 +11,57 @@ using System.Windows.Forms;
 
 namespace Calculator
 {
-    //thiiiiiisssss thing sucks go down see new code its betteeeeer
+    //mostly done could be add more little changes
 
     public partial class Form1 : Form
     {
         double result = 0;
-        string operation = "";
         public Form1()
         {
             InitializeComponent();
         }
 
-
-        /*
-        private void commonButtonsforNumbers(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            currentInput += btn.Text;
-            textBox.Text += btn.Text;
-        }
-
-        private void commonButtonForOperations(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(operation))
-            {
-
-                Calculate();
-            }
-            else
-            {
-                operation = "+";
-                Calculate();
-            }
-            Button btn = (Button)sender;
-            operation = btn.Text;
-            textBox.Text += operation;
-        }
-
-        private void RootBtn_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            textBox.Text += btn.Text;
-            double input = Math.Sqrt(double.Parse(currentInput));
-            string formattedResult = input.ToString("F3");
-            currentInput = formattedResult;
-        }
-
-        private void SquareBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
-        private void BackBtn_Click(object sender, EventArgs e)
-        {
-            ///this thing sucks i know im trying to change it
-            if(!string.IsNullOrEmpty(textBox.Text))
-            {
-                textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
-                if (textBox.Text.Length > 0 && textBox.Text[textBox.Text.Length - 1] == '.')
-                {
-                    textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
-                }
-            }
-            
-            if (string.IsNullOrEmpty(currentInput))
-            {
-                CleareBtn.PerformClick();
-            }
-            else
-            {
-                if (!textBox.Text.EndsWith("^2") || !textBox.Text.EndsWith("√2"))
-                {
-                    currentInput = currentInput.Substring(0, currentInput.Length - 1);
-                }
-                if (currentInput.Length > 0 && currentInput[currentInput.Length - 1] == '.')
-                {
-                    currentInput = currentInput.Substring(0, currentInput.Length - 1);
-                }
-            } 
-        }
-
-        private void Calculate()
-        {
-            if (String.IsNullOrEmpty(currentInput))
-            {
-                currentInput = "0";
-            }
-                
-            double input = double.Parse(currentInput);
-
-            switch (operation)
-            {
-                case "+":
-                    result += input;
-                    currentInput = "";
-                    operation = "";
-                    break;
-                case "-":
-                    result -= input;
-                    currentInput = "";
-                    operation = "";
-                    break;
-                case "X":
-                    result *= input;
-                    currentInput = "";
-                    operation = "";
-                    break;
-                case "/":
-                    if (input == 0)
-                    {
-                        textBox.Text = "error";
-                    }
-                    else
-                    {
-                        currentInput = "";
-                        operation = "";
-                        result /= input;
-                    }
-                    break;
-                
-                default:
-                    result = input;
-                    break;
-            }
-
-        }
-
-        private void CleareBtn_Click(object sender, EventArgs e)
-        {
-            result = 0;
-            operation = "";
-            textBox.Text = "";
-            textBox2.Text = "";
-            currentinput = "";
-        }
-        */
-
-
-
-
-
-
-
-
-
-        //almost work correctly check 6+4×3−8÷2+√25+2^3−(3)√27
-​
-
-
         char lastChar = ' ';
+
         private void numberButtons(object sender, EventArgs e)
         {
             Button button = (Button)sender;
 
-
-            if (button.Text == "." && string.IsNullOrEmpty(textBox.Text) && lastChar == '.')
+            if (button.Text == "." && (string.IsNullOrEmpty(textBox.Text) || lastChar == '.'))
             {
-                textBox.Text = "error";
+                MessageBox.Show("you can only add dot after number and you only can use dot once in a number", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 textBox.Text += button.Text;
-                lastChar = textBox.Text[textBox.TextLength - 1];
+                lastChar = char.Parse(button.Text);
             }
 
         }
+
         HashSet<char> operationChars = new HashSet<char> { '+', '-', 'X', '/', '^', '√' };
         private void operationsButton(object sender, EventArgs e)
         {
             Button button = (Button)sender;
 
-
-            if (!string.IsNullOrEmpty(textBox.Text) && !operationChars.Contains(lastChar))
+            if (!string.IsNullOrEmpty(textBox.Text) && !operationChars.Contains(textBox.Text[textBox.TextLength - 1]))
             {
                 textBox.Text += button.Text;
             }
             else
             {
-                textBox.Text = "error";
+                MessageBox.Show("you should first add number and then operation sign", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        //check if last char is number
-        private void EqBtn_Click(object sender, EventArgs e)
+        private void BackBtn_Click(object sender, EventArgs e)
         {
-            Calculate();
-            if (string.IsNullOrEmpty(textBox2.Text))
+            if (!string.IsNullOrEmpty(textBox.Text))
             {
-                textBox2.Text = textBox.Text;
+                textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
             }
-            else
-            {
-                textBox2.Text = "";
-                textBox2.Text = textBox.Text;
-            }
-
-            result = double.Parse(outPut.Peek());
-            outPut.Pop();
-
-            if (result % 1 != 0)
-            {
-                string formattedResult = result.ToString("F3");
-                textBox.Text = formattedResult;
-            }
-            else
-            {
-                textBox.Text = result.ToString();
-            }
-
         }
+
         private void CleareBtn_Click(object sender, EventArgs e)
         {
             result = 0;
@@ -232,7 +73,31 @@ namespace Calculator
             containsPriorityOperation = false;
         }
 
-        //new code i know i should add much more things <3
+        private void EqBtn_Click(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrEmpty(textBox.Text) && !operations.Contains(textBox.Text[textBox.TextLength - 1]))
+            {
+                Calculate();
+
+                textBox2.Text = textBox.Text;
+                result = double.Parse(outPut.Peek());
+                outPut.Pop();
+
+                if (result % 1 != 0)
+                {
+                    string formattedResult = result.ToString("F3");
+                    textBox.Text = formattedResult;
+                }
+                else
+                {
+                    textBox.Text = result.ToString();
+                }
+            }
+            else
+            {
+                MessageBox.Show("you cant end equation by any operation sign and you cant use equal button when text box is empty", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         Stack<string> outPut = new Stack<string>();
         List<string> RPN = new List<string>();
@@ -254,39 +119,31 @@ namespace Calculator
                 {
                     RPN.Add(wholeNumber);
                     wholeNumber = "";
-                    if (containsPriorityOperation || containsNormalOperation && !PriorityOperation.Contains(Ch))
+                    if (!containsPriorityOperation)
                     {
-                        if (!PriorityOperation.Contains(Ch))
+                        if (PriorityOperation.Contains(Ch))
                         {
-                            containsPriorityOperation = false;
+                            containsPriorityOperation = true;
                         }
-                        char tempOp;
-
-                        tempOp = operations.Peek();
-                        operations.Pop();
-
-                        operations.Push(Ch);
-
-                        containsNormalOperation = true;
-
-                        RPN.Add(tempOp.ToString());
 
                         operations.Push(Ch);
                     }
                     else
                     {
-                        operations.Push(Ch);
-                        if (PriorityOperation.Contains(Ch))
+                        foreach (char OP in operations)
                         {
-                            containsPriorityOperation = true;
+                            RPN.Add(OP.ToString());
                         }
-                        else
+
+                        operations.Clear();
+                        operations.Push(Ch);
+
+                        if (!PriorityOperation.Contains(Ch))
                         {
-                            containsNormalOperation = true;
+                            containsPriorityOperation = false;
                         }
                     }
                 }
-
             }
 
             RPN.Add(wholeNumber);
@@ -301,7 +158,6 @@ namespace Calculator
 
             foreach (string X in RPN)
             {
-                
                 if (double.TryParse(X, out _))
                 {
                     outPut.Push(X.ToString());
@@ -333,7 +189,7 @@ namespace Calculator
                             case "/":
                                 if (tempNum1 == 0)
                                 {
-                                    textBox.Text = "error";
+                                    MessageBox.Show("you cant divide number by 0", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                                 else
                                 {
@@ -347,7 +203,6 @@ namespace Calculator
                                 tempNum2 = Math.Pow(tempNum1, 1.0 / tempNum2);
                                 break;
                         }
-
                         outPut.Push(tempNum2.ToString());
                     }
                 }

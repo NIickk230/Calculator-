@@ -384,6 +384,7 @@
             this.BackBtn.TabIndex = 21;
             this.BackBtn.Text = "<<";
             this.BackBtn.UseVisualStyleBackColor = false;
+            this.BackBtn.Click += new System.EventHandler(this.BackBtn_Click);
             // 
             // button5
             // 
